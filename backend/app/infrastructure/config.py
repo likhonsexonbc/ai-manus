@@ -6,10 +6,12 @@ class Settings(BaseSettings):
     
     # Model provider configuration
     api_key: str | None = None
-    api_base: str = "https://api.deepseek.com/v1"
+    gemini_api_key: str | None = None
+    api_base: str = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    model_provider: str = "deepseek"  # Options: "deepseek", "openai", "gemini"
     
     # Model configuration
-    model_name: str = "deepseek-chat"
+    model_name: str = "gemini-2.0-flash"
     temperature: float = 0.7
     max_tokens: int = 2000
     
@@ -52,8 +54,10 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8"
         
     def validate(self):
-        if not self.api_key:
-            raise ValueError("API key is required")
+        if self.model_provider in ["openai", "deepseek"] and not self.api_key:
+            raise ValueError(f"API key is required for {self.model_provider}")
+        if self.model_provider == "gemini" and not self.gemini_api_key:
+            raise ValueError("Gemini API key is required for Gemini provider")
 
 @lru_cache()
 def get_settings() -> Settings:
