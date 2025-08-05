@@ -11,8 +11,8 @@ class OpenAILLM(LLM):
     def __init__(self):
         settings = get_settings()
         self.client = AsyncOpenAI(
-            api_key=settings.api_key,
-            base_url=settings.api_base
+            api_key=settings.gemini_api_key,
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
         )
         
         self._model_name = settings.model_name

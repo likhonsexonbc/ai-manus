@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     model_provider: str = "gemini" 
     
     # Model configuration
-    model_name: str = "gemini-2.0-flash"
+    model_name: str = "gemini-2.5-flash"
     temperature: float = 0.7
     max_tokens: int = 2000
     
