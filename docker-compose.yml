@@ -29,7 +29,6 @@ services:
           - linux/arm64
     depends_on:
       - sandbox
-      - redis
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -52,26 +51,6 @@ services:
     restart: "no"
     networks:
       - manus-network
-
-#  mongodb:
-#    image: mongo:7.0
-#    volumes:
-#      - mongodb_data:/data/db
-#    restart: unless-stopped
-#    ports:
-#      - "27017:27017"
-#    networks:
-#      - manus-network
-
-  redis:
-    image: redis:7.0
-    restart: unless-stopped
-    networks:
-      - manus-network
-
-volumes:
-  mongodb_data:
-    name: manus-mongodb-data
 
 networks:
   manus-network:
