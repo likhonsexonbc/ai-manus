@@ -33,12 +33,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       #- ./mcp.json:/etc/mcp.json # Mount MCP servers directory
-    ports:
-      - "8000:8000"
     networks:
       - manus-network
+    ports:
+      - "8000:8000"
     env_file:
-      - .env
+      - ./backend/.env
 
   sandbox:
     image: ${IMAGE_REGISTRY:-simpleyyt}/manus-sandbox:${IMAGE_TAG:-latest}
@@ -49,8 +49,7 @@ services:
         platforms:
           - linux/amd64
           - linux/arm64
-    command: /bin/sh -c "exit 0"  # prevent sandbox from starting, ensure image is pulled
-    restart: "no"
+    restart: unless-stopped
     networks:
       - manus-network
 
